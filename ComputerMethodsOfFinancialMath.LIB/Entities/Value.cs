@@ -5,11 +5,11 @@ namespace ComputerMethodsOfFinancialMath.LIB.Entities
 {
     public class Value
     {
-        public double MoneySum { get; protected set; }
+        public double MoneySum { get; internal set; } = 500.0;
 
-        public float InterestRate { get; protected set; }
+        public float InterestRate { get; internal set; } = 0.1f;
 
-        public DateTime CurrentDate { get; protected set; } = DateTime.Now;
+        public DateTime CurrentDate { get; internal set; } = DateTime.Now;
 
 
         public Value ChangeRate(float interestRate)
@@ -25,6 +25,8 @@ namespace ComputerMethodsOfFinancialMath.LIB.Entities
         {
             if (moneySum <= 0)
                 throw new ArgumentException($"[{moneySum}] must be grater than zero.", nameof(moneySum));
+
+            MoneySum = moneySum;
 
             return this;
         }
