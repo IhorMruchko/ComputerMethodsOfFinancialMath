@@ -1,0 +1,122 @@
+﻿<UserControl x:Class="ComputerMethodsOfFinancialMath.WPF.Views.ValueView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ComputerMethodsOfFinancialMath.WPF.Views" 
+             xmlns:viewmodels="clr-namespace:ComputerMethodsOfFinancialMath.WPF.ViewModels" 
+             xmlns:validation="clr-namespace:ComputerMethodsOfFinancialMath.WPF.Resources.Validation"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             >
+    <UserControl.DataContext>
+        <viewmodels:ValueViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <DockPanel>
+            <materialDesign:MaterialDateDisplay HorizontalContentAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontFamily="{Binding FontFamily, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                                Margin="0 0 50 0"
+                                                VerticalContentAlignment="Center" DisplayDate="{Binding CurrentDate}"/>
+            <TextBox Width="200"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Bottom"
+                     HorizontalContentAlignment="Center"
+                     VerticalContentAlignment="Center">
+                <TextBox.Text>
+                    <Binding Path="MoneySum" 
+                             Mode="TwoWay" 
+                             Converter="{StaticResource TextToDouble}" 
+                             UpdateSourceTrigger="PropertyChanged"
+                             StringFormat="{} {0:F}">
+                        <Binding.ValidationRules>
+                            <validation:DoubleTextValidation/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox Width="200"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Bottom"
+                     HorizontalContentAlignment="Center"
+                     VerticalContentAlignment="Center">
+                <TextBox.Text>
+                    <Binding Path="InterestRate" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource TextToFloat}">
+                        <Binding.ValidationRules>
+                            <validation:FloatTextValidation/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </DockPanel>
+
+        <Grid Grid.Row="1" Margin="0 15 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0"
+                        Orientation="Vertical">
+                <RadioButton x:Name="DiscretePanel"
+                             GroupName="EvaluationType"
+                             HorizontalAlignment="Center"
+                             IsChecked="True"/>
+
+                <materialDesign:MaterialDateDisplay HorizontalAlignment="Center"
+                                                    IsEnabled="{Binding ElementName=DiscretePanel, Path=IsChecked}"
+                                                    DisplayDate="{Binding ElementName=AproximationDate, Path=SelectedDate}"/>
+
+
+                <DatePicker x:Name="AproximationDate"
+                            IsEnabled="{Binding IsChecked, ElementName=DiscretePanel}"
+                            SelectedDate="{Binding CurrentDate, Mode=OneTime}"
+                            HorizontalContentAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="0 0 0 20"/>
+
+
+                <Button Margin="0 20 0 0"
+                        Width="300"
+                        Content="Evaluate"
+                        IsEnabled="{Binding ElementName=DiscretePanel, Path=IsChecked}"
+                        Command="{Binding ContinousApproachCommand}"
+                        CommandParameter="{Binding ElementName=AproximationDate, Path=SelectedDate}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Vertical">
+                <RadioButton x:Name="ContinousPanel"
+                             GroupName="EvaluationType"
+                             HorizontalAlignment="Center"
+                             IsChecked="False"/>
+                <TextBox Width="100"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center"
+                         IsEnabled="{Binding ElementName=ContinousPanel, Path=IsChecked}">
+                    <TextBox.Text>
+                        <Binding Path="Years" Converter="{StaticResource TextToInt}">
+                            <Binding.ValidationRules>
+                                <validation:IntTextValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <Button Margin="0 100 0 0"
+                        Width="300"
+                        Content="Evaluate"
+                        IsEnabled="{Binding ElementName=ContinousPanel, Path=IsChecked}"
+                        Command="{Binding DiscreteApproachCommand}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

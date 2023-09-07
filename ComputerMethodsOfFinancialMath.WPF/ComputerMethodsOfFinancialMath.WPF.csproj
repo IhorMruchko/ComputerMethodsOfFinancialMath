@@ -7,4 +7,18 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Common.ExceptionHandling" Version="1.0.0" />
+    <PackageReference Include="Common.WPF" Version="0.0.1" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ComputerMethodsOfFinancialMath.LIB\ComputerMethodsOfFinancialMath.LIB.csproj" />
+  </ItemGroup>
+
 </Project>
