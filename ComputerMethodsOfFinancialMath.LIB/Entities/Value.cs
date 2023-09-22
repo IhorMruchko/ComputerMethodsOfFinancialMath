@@ -43,11 +43,17 @@ namespace ComputerMethodsOfFinancialMath.LIB.Entities
         public static Value operator +(Value value, DateTime timePeriod)
           => ValueHelpers.FutureContinuous(value, timePeriod);
 
+        public static Value operator +(Value value, float timePeriod)
+         => ValueHelpers.FutureContinuous(value, timePeriod);
+
         public static Value operator -(Value value, int year) 
             => ValueHelpers.PresentDiscrete(value, year);
 
         public static Value operator -(Value value, DateTime timePerion)
           => ValueHelpers.PresentContinuous(value, timePerion);
+
+        public static Value operator -(Value value, float timePeriod)
+        => ValueHelpers.PresentContinuous(value, timePeriod);
 
 
         public static implicit operator Value(double money) 

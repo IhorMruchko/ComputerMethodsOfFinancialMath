@@ -5,4 +5,5 @@
     <converters:TextToFloatConverter x:Key="TextToFloat"/>
     <converters:TextToDoubleConverter x:Key="TextToDouble"/>
     <converters:TextToIntConverter x:Key="TextToInt"/>
+    <converters:MultiBindingConverter x:Key="Array"/>
 </ResourceDictionary>

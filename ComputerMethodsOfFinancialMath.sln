@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerMethodsOfFinancialMath.LIB", "ComputerMethodsOfFinancialMath.LIB\ComputerMethodsOfFinancialMath.LIB.csproj", "{5566CD4C-685C-4617-885E-AB6533337266}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComputerMethodsOfFinancialMath.LIB", "ComputerMethodsOfFinancialMath.LIB\ComputerMethodsOfFinancialMath.LIB.csproj", "{5566CD4C-685C-4617-885E-AB6533337266}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerMethodsOfFinancialMath.WPF", "ComputerMethodsOfFinancialMath.WPF\ComputerMethodsOfFinancialMath.WPF.csproj", "{EEB5D80F-E21D-4A5B-A33F-E068F1B24FD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComputerMethodsOfFinancialMath.WPF", "ComputerMethodsOfFinancialMath.WPF\ComputerMethodsOfFinancialMath.WPF.csproj", "{EEB5D80F-E21D-4A5B-A33F-E068F1B24FD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerMethodsOfFinancialMath.ConsoleApp", "ComputerMethodsOfFinancialMath.ConsoleApp\ComputerMethodsOfFinancialMath.ConsoleApp.csproj", "{37EE487C-69D7-4EDB-A59D-6D4A0914FCA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{EEB5D80F-E21D-4A5B-A33F-E068F1B24FD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEB5D80F-E21D-4A5B-A33F-E068F1B24FD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEB5D80F-E21D-4A5B-A33F-E068F1B24FD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37EE487C-69D7-4EDB-A59D-6D4A0914FCA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37EE487C-69D7-4EDB-A59D-6D4A0914FCA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37EE487C-69D7-4EDB-A59D-6D4A0914FCA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37EE487C-69D7-4EDB-A59D-6D4A0914FCA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

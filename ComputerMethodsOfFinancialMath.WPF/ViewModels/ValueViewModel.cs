@@ -1,8 +1,10 @@
-﻿using Common.WPF;
+﻿using Common.WPF.ViewModels;
+using Common.WPF.Commands;
 using ComputerMethodsOfFinancialMath.LIB.Entities;
 using ComputerMethodsOfFinancialMath.LIB.Helpers;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ComputerMethodsOfFinancialMath.WPF.ViewModels;
 
@@ -11,6 +13,8 @@ public class ValueViewModel : ViewModel
     private readonly Value _value = new();
 
     private int _years = 1;
+
+    private float _continousYears = 1;
 
     public RelayedCommand ContinousApproachCommand => new (EvaluateContinousBlock);
 
@@ -47,6 +51,16 @@ public class ValueViewModel : ViewModel
         }
     }
 
+    public float YearsForContinous
+    {
+        get => _continousYears;
+        set
+        {
+            _continousYears = value;
+            OnPropertyChanged();
+        }
+    }
+
     public DateTime CurrentDate
     {
         get => _value.CurrentDate;
@@ -59,10 +73,19 @@ public class ValueViewModel : ViewModel
 
     private void EvaluateContinousBlock(object? parameter)
     {
-        if (parameter is not DateTime date)
+        if (parameter is not object[] array || 
+            array.Length != 3 ||
+            array[0] is not bool isChecked || 
+            array[1] is not DateTime date || 
+            array[2] is not string yearsStr ||
+            float.TryParse(yearsStr, out var years) == false)
+
             return;
 
-        EvaluateContinous(date);
+        if (isChecked)
+            EvaluateContinous(date);
+        else
+            EvaluateContinous(years);
     }
 
     private void EvaluateDiscreteBlock(object? parameter) 
@@ -91,6 +114,17 @@ public class ValueViewModel : ViewModel
         }
 
         Update(_value - date);
+    }
+
+    private void EvaluateContinous(float date)
+    {
+        if (date > 0)
+        {
+            Update(_value + date);
+            return;
+        }
+
+        Update(_value - Math.Abs(date));
     }
 
     private void Update(Value newValue)

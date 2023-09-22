@@ -8,11 +8,7 @@
              xmlns:validation="clr-namespace:ComputerMethodsOfFinancialMath.WPF.Resources.Validation"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             >
-    <UserControl.DataContext>
-        <viewmodels:ValueViewModel/>
-    </UserControl.DataContext>
+             d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -66,34 +62,63 @@
 
             <StackPanel Grid.Column="0"
                         Orientation="Vertical">
-                <RadioButton x:Name="DiscretePanel"
+                <RadioButton x:Name="ContinousPanel"
                              GroupName="EvaluationType"
                              HorizontalAlignment="Center"
                              IsChecked="True"/>
 
                 <materialDesign:MaterialDateDisplay HorizontalAlignment="Center"
-                                                    IsEnabled="{Binding ElementName=DiscretePanel, Path=IsChecked}"
+                                                    IsEnabled="{Binding ElementName=ContinousPanel, Path=IsChecked}"
                                                     DisplayDate="{Binding ElementName=AproximationDate, Path=SelectedDate}"/>
 
 
-                <DatePicker x:Name="AproximationDate"
-                            IsEnabled="{Binding IsChecked, ElementName=DiscretePanel}"
-                            SelectedDate="{Binding CurrentDate, Mode=OneTime}"
-                            HorizontalContentAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Margin="0 0 0 20"/>
+                <StackPanel Orientation="Horizontal"
+                            IsEnabled="{Binding IsChecked, ElementName=ContinousPanel}"
+                            Margin="0, 20 0 0"
+                            VerticalAlignment="Center">
+                    <CheckBox Name="CheckBox" IsChecked="True"
+                              Content="Use calendar date"
+                              Margin="0 0 30 0"/>
+                    <DatePicker x:Name="AproximationDate"
+                                IsEnabled="{Binding IsChecked, ElementName=CheckBox}"
+                                SelectedDate="{Binding CurrentDate, Mode=OneTime}"/>
+                    <TextBox x:Name="YearTextBox"
+                             Width="100"
+                             Margin="20 0 0 0"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Bottom"
+                             HorizontalContentAlignment="Center"
+                             VerticalContentAlignment="Center"
+                             IsEnabled="{Binding ElementName=CheckBox, Path=IsChecked, Converter={StaticResource InvertBooleanConverter}}">
+                        <TextBox.Text>
+                            <Binding Path="YearsForContinous" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource TextToFloat}">
+                                <Binding.ValidationRules>
+                                    <validation:FloatTextValidationClear/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </StackPanel>
 
 
                 <Button Margin="0 20 0 0"
                         Width="300"
                         Content="Evaluate"
-                        IsEnabled="{Binding ElementName=DiscretePanel, Path=IsChecked}"
-                        Command="{Binding ContinousApproachCommand}"
-                        CommandParameter="{Binding ElementName=AproximationDate, Path=SelectedDate}"/>
+                        IsEnabled="{Binding ElementName=ContinousPanel, Path=IsChecked}"
+                        Command="{Binding ContinousApproachCommand}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource Array}">
+                            <Binding ElementName="CheckBox" Path="IsChecked"/>
+                            <Binding ElementName="AproximationDate"
+                                     Path="SelectedDate"/>
+                            <Binding ElementName="YearTextBox" Path="Text"/>
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Vertical">
-                <RadioButton x:Name="ContinousPanel"
+                <RadioButton x:Name="DiscretePanel"
                              GroupName="EvaluationType"
                              HorizontalAlignment="Center"
                              IsChecked="False"/>
@@ -102,7 +127,7 @@
                          VerticalAlignment="Center"
                          HorizontalContentAlignment="Center"
                          VerticalContentAlignment="Center"
-                         IsEnabled="{Binding ElementName=ContinousPanel, Path=IsChecked}">
+                         IsEnabled="{Binding ElementName=DiscretePanel, Path=IsChecked}">
                     <TextBox.Text>
                         <Binding Path="Years" Converter="{StaticResource TextToInt}">
                             <Binding.ValidationRules>
@@ -114,7 +139,7 @@
                 <Button Margin="0 100 0 0"
                         Width="300"
                         Content="Evaluate"
-                        IsEnabled="{Binding ElementName=ContinousPanel, Path=IsChecked}"
+                        IsEnabled="{Binding ElementName=DiscretePanel, Path=IsChecked}"
                         Command="{Binding DiscreteApproachCommand}"/>
             </StackPanel>
         </Grid>

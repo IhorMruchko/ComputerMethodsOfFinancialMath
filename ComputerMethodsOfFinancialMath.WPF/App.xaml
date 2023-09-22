@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ComputerMethodsOfFinancialMath.WPF"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:viewModels="clr-namespace:ComputerMethodsOfFinancialMath.WPF.ViewModels"
+             xmlns:views="clr-namespace:ComputerMethodsOfFinancialMath.WPF.Views"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -12,6 +14,14 @@
 
                 <ResourceDictionary Source="Resources\Converters.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type viewModels:ValueViewModel}">
+                <views:ValueView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModels:SolutionViewModel}">
+                <views:SolutionView/>
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

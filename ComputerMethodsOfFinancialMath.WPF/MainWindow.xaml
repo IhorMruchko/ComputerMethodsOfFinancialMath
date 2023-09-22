@@ -4,14 +4,68 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ComputerMethodsOfFinancialMath.WPF"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:views="clr-namespace:ComputerMethodsOfFinancialMath.WPF.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:views="clr-namespace:ComputerMethodsOfFinancialMath.WPF.Views"
+        xmlns:viewmodels="clr-namespace:Common.WPF.ViewModels;assembly=Common.WPF"
+        xmlns:vm="clr-namespace:ComputerMethodsOfFinancialMath.WPF.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         Background="{DynamicResource MaterialDesignPaper}"
         Foreground="{DynamicResource MaterialDesignDarkForeground}"
         FontFamily="CascadiaCode semilight"
         FontSize="14">
+    <Window.DataContext>
+        <viewmodels:SlidebarViewModel/>
+    </Window.DataContext>
     <Grid>
-        <views:ValueView/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding ElementName=DockPanelMenu, Path=Width}"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DockPanel x:Name="DockPanelMenu">
+            <DockPanel.Style>
+                <Style TargetType="DockPanel">
+                    <Setter Property="LastChildFill" Value="False"/>
+                    <Setter Property="Width" Value="30"/>
+                    <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=Height}"/>
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Width"
+                                                     To="150"
+                                                     Duration="0:0:0.25"
+                                                     BeginTime="0:0:0.2"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Width"
+                                                     To="30"
+                                                     Duration="0:0:0.25"
+                                                     BeginTime="0:0:0.2"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DockPanel.Style>
+            <Button DockPanel.Dock="Top"
+                    Width="{Binding ElementName=DockPanelMenu, Path=Width}"
+                    Content="Value"
+                    Command="{Binding SelectConcreteCommand}"
+                    CommandParameter="{x:Type vm:ValueViewModel}"/>
+
+            <Button DockPanel.Dock="Top"
+                    Width="{Binding ElementName=DockPanelMenu, Path=Width}"
+                    Content="Solution"
+                    Command="{Binding SelectConcreteCommand}"
+                    CommandParameter="{x:Type vm:SolutionViewModel}"/>
+        </DockPanel>
+        <ContentControl Grid.Column="1"
+                        Content="{Binding SelectedViewModel}"/>
     </Grid>
 </Window>
