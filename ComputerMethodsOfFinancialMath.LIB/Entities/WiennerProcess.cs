@@ -36,7 +36,7 @@ namespace ComputerMethodsOfFinancialMath.LIB.Entities
         {
             var random = new Random();
             var squareDelta = Math.Sqrt(Delta);
-            WiennerValues = random.NextNormals(Slices, Mu, Sigma).Select(n => n * squareDelta).ToList().CumulativeSum();
+            WiennerValues = random.NextNormals(Slices).Select(n => n * squareDelta).ToList().CumulativeSum();
             WiennerValues.Insert(0, 0d);
         }
 

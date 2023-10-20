@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Entities\OptionSolutions\BlackScholesSolution.cs~RF200de23c.TMP" />
     <None Remove="Entities\Solution.cs~RF783c74.TMP" />
   </ItemGroup>
 
